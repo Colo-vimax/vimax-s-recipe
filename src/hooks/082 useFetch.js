@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react"
 
-export const useFetch = (url, method="GET") => {
+export const useFetch = (url, method = "GET") => {
   const [data, setData] = useState(null)
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState(null)
   const [options, setOptions] = useState(null)
 
+
   const postData = (postData) => {
     setOptions({
-      method: 'POST',
-      header: {'Content-type':'application/json'} ,
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json"
+      },
       body: JSON.stringify(postData)
     })
-
   }
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export const useFetch = (url, method="GET") => {
       setIsPending(true)
       
       try {
-        const res = await fetch(url, {...fetchOptions, signal: controller.signal })
+        const res = await fetch(url, { ...fetchOptions, signal: controller.signal })
         if(!res.ok) {
           throw new Error(res.statusText)
         }
@@ -40,21 +42,20 @@ export const useFetch = (url, method="GET") => {
         }
       }
     }
-    if (method === "GET") {
-      fetchData()     
+
+    if (method === 'GET'){
+      fetchData()
     }
     if (method === "POST" && options){
       fetchData(options)
     }
-
-
-    fetchData()
+  
 
     return () => {
       controller.abort()
     }
 
-  }, [url, method, options])
+  }, [url, options, method ])
 
   return { data, isPending, error, postData }
 }
