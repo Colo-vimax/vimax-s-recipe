@@ -9,9 +9,10 @@ function RecipeList({ data }) {
     <div className='recipe-list'>
         {data.map(recipe => (
         <div key={recipe.id} className='card'>        
-          <h3 >{recipe.title}</h3>
+          <h2 >{recipe.title}</h2>
           <p>{recipe.cookingTime} to make</p>
-          <div>{recipe.method.substring(0, 100)} ...</div>
+
+          <div>{ recipe.method && recipe.method.substring(0, 100)} ...</div>
           <Link to={`/recipe/${recipe.id}`} className='a'>Cook this</Link>
         </div>))}
     </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useRef } from 'react'
-
+import { useFetch } from '../../hooks/082 useFetch'
 
 // styles
 import './Create.css'
@@ -12,29 +12,37 @@ const Create = () => {
   // value
   const [newIngredients, setnewIngredients] = useState("")
   // array
-  const [ingredients, setIngredients] = useState
+  const [ingredients, setIngredients] = useState([])
+  const inputRef = useRef(null)
+
+  const { postData, data, error} = useFetch("http://localhost:3000/recipes", 'POST')
+  
   const handleForm = (e) => {
     e.preventDefault()
-    console.log(title ,time , method)
+    postData({title, ingredients, method,  time: time + "minutes"})
 
   } 
 
   const handleAdd = (e) => {
     e.preventDefault()
     // value no space
-
-    if (newIngredients && !ingredients.includes()) {
-      
-    }
-    // no dups
+    const ing = newIngredients.trim()
+       // no dups
+    if (newIngredients && !ingredients.includes(ing)) {
+      setIngredients(prevIngredients => 
+        [...prevIngredients,
+        ing]
+     )   
     // clear
+      setnewIngredients("")
     // focus input
-    
+      inputRef.current.focus();
+    }     
   }
 
   return (
     <div className='create'>
-      <h2 className='page-title'>Add a recipient:</h2>
+      <h2 className='page-title'>Add a Recipe:</h2>
       <form onSubmit={handleForm} >
               <label>
                 <span>Enter title:</span>
@@ -63,10 +71,12 @@ const Create = () => {
                   <input type="text"
                   onChange={e => setnewIngredients(e.target.value)}
                   value={newIngredients}
+                  ref={inputRef}
                   required
                    />
-                  <button className='button' onClick={handleAdd}>Add</button>
+                  <button className='button' type='add' onClick={handleAdd}>Add</button>
                 </div>
+                <p className='p' >ingredient:{ingredients.map(ing => <li key={ing}><em>{ing}</em></li>)}</p>
 
               </label>
 
