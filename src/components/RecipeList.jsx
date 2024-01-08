@@ -7,7 +7,7 @@ import './RecipeList.css'
 function RecipeList({ data }) {   
   return ( 
     <div className='recipe-list'>
-        {data.map(recipe => (
+        {data && data.map(recipe => (
         <div key={recipe.id} className='card'>        
           <h2 >{recipe.title}</h2>
           <p>{recipe.cookingTime} to make</p>
