@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import './RecipeList.css'
 
 function RecipeList({ data }) {   
+  
   return ( 
     <div className='recipe-list'>
         {data && data.map(recipe => (
