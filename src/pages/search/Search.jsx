@@ -37,7 +37,7 @@ const Search = () => {
       {error && <p className='error'>{error}</p>}
       {isPending && <p className='loading'>is loading..</p>}
       {!isPending && filteredRecipes && filteredRecipes.length === 0 && (
-        <p className='no-recipe'>No recipes found for "{query}"</p>
+        <p className='error'>No recipes found for "{query}"</p>
       )}
       {filteredRecipes && filteredRecipes > 0 && 
       (<RecipeList data={filteredRecipes} />
