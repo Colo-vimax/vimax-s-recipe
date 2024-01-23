@@ -43,7 +43,7 @@
         "eggs,milk , floor"
       ],
       "method": "boil,marinate and fry",
-      "time": "10minutes",
+      "cookingTime": "10minutes",
       "id": "5wtnS_V"
     },
     {
@@ -52,7 +52,7 @@
         "eggs,milk , floor"
       ],
       "method": "boil,marinate and fry",
-      "time": "10minutes",
+      "cookingTime": "10minutes",
       "id": "FECS8zK"
     }
   ]

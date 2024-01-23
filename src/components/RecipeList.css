@@ -50,6 +50,8 @@
     cursor: pointer;
     filter: invert();
 }
+
+
 /* dark mode */
 .recipe-list .card.dark {
     background: #555;

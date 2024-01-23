@@ -3,6 +3,15 @@
     max-width: 480px;
     margin: 60px auto;
 }
+
+.create.dark{
+    background: #555;
+}
+.create.dark span,
+.create.dark p,
+.create.dark ingredients{
+    color: #79AD44;
+}
 .create label span {
     display: block;
     margin: 30px 0 10px;

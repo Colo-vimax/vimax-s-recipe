@@ -1,13 +1,18 @@
 import React from 'react'
-import { useState, useRef } from 'react'
-import { useFetch } from '../../hooks/082 useFetch'
+import { useState, useRef , useEffect } from 'react'
+// import { useFetch } from '../../hooks/082 useFetch'
+import { useNavigate } from "react-router-dom";
+import { useTheme } from '../../hooks/useTheme'
+import { projectFirestore } from '../../firebase/config'
 
 // styles
 import './Create.css'
 
 const Create = () => {
+  const { mode } = useTheme()
+
   const [title , setTitle] = useState('')
-  const [time , setTime] = useState(0)
+  const [cookingTime , setCookingTime] = useState(0)
   const [method, setMethod] = useState('')
   // value
   const [newIngredients, setnewIngredients] = useState("")
@@ -15,12 +20,22 @@ const Create = () => {
   const [ingredients, setIngredients] = useState([])
   const inputRef = useRef(null)
 
-  const { postData, data, error} = useFetch("http://localhost:3000/recipes", 'POST')
+  // const { postData, data, error} = useFetch("http://localhost:3000/recipes", 'POST')
+  const navigate = useNavigate()
   
-  const handleForm = (e) => {
+  const handleForm = async(e) => {
     e.preventDefault()
-    postData({title, ingredients, method,  time: time + "minutes"})
+    const doc = ( {title, ingredients, method,  cookingTime: cookingTime + "minutes"})
+    try{
+      // FINISH
+      await projectFirestore.collection('recipes').add(doc)
+      navigate("/")
+    } catch(err) {
+      console.log(err);
 
+    }
+   
+ 
   } 
 
   const handleAdd = (e) => {
@@ -39,9 +54,15 @@ const Create = () => {
       inputRef.current.focus();
     }     
   }
+  // // REDIRECTS USER WHEN WE GET A RENSPONSE
+  // useEffect(() => {
+  //   if(data) {
+  //     navigate("/")
+  //   }
+  // },[data])
 
   return (
-    <div className='create'>
+    <div className={`create ${mode}`}>
       <h2 className='page-title'>Add a Recipe:</h2>
       <form onSubmit={handleForm} >
               <label>
@@ -58,9 +79,9 @@ const Create = () => {
                 <span>Enter the cooking time(minutes):</span>
                 <input 
                   type="number"
-                  name="time"
-                  value={time}
-                  onChange={e => setTime(e.target.value) }
+                  name="cookingTime"
+                  value={cookingTime}
+                  onChange={e => setCookingTime(e.target.value) }
                   required
                   />
               </label>
